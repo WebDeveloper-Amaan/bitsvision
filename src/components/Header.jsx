@@ -1,8 +1,9 @@
 export default function Header({ apiOnline, saving, onHistoryToggle, historyOpen, onLearnToggle, learnOpen }) {
   return (
-    <header className="flex items-start justify-between gap-3 border-b border-white/8 pb-4">
+    <header className="flex flex-col gap-3 border-b border-white/8 pb-4 sm:flex-row sm:items-start sm:justify-between">
+      {/* Title */}
       <div className="min-w-0">
-        <h1 className="mt-1.5 text-2xl font-black tracking-tight text-white sm:text-3xl">
+        <h1 className="mt-1 text-2xl font-black tracking-tight text-white sm:mt-1.5 sm:text-3xl">
           BitsVision
         </h1>
         <p className="mt-0.5 text-xs text-slate-400">
@@ -10,7 +11,8 @@ export default function Header({ apiOnline, saving, onHistoryToggle, historyOpen
         </p>
       </div>
 
-      <div className="flex shrink-0 flex-wrap items-center justify-end gap-2 pt-1">
+      {/* Buttons row */}
+      <div className="flex shrink-0 flex-wrap items-center gap-2 sm:justify-end sm:pt-1">
         {/* Learn */}
         <button
           onClick={onLearnToggle}

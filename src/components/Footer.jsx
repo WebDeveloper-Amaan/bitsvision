@@ -73,7 +73,7 @@ export default function Footer() {
         {/* Left — branding */}
         <div className="flex flex-col items-center gap-2 sm:items-start">
           <p className="text-[9px] font-black uppercase tracking-[0.45em] text-slate-700">
-            Built &amp; Designed by
+          Designed &amp; Developed by
           </p>
           <div className="flex items-center gap-2.5">
             {/* avatar-style monogram */}
