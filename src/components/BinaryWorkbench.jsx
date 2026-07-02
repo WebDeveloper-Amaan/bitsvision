@@ -106,25 +106,25 @@ export default memo(function BinaryWorkbench({ model, display, expression, onBit
   const phase = model.phase;
 
   return (
-    <section className="flex flex-col gap-4 rounded-2xl border border-white/8 bg-[#06090f] p-5 sm:p-6">
+    <section className="flex flex-col gap-3 rounded-2xl border border-white/8 bg-[#06090f] p-3 sm:gap-4 sm:p-5 lg:p-6">
 
       {/* ── Header ── */}
-      <div className="flex items-start justify-between gap-4 border-b border-white/6 pb-4">
+      <div className="flex items-start justify-between gap-3 border-b border-white/6 pb-3">
         <div className="min-w-0">
           <p className="text-[9px] font-black uppercase tracking-[0.45em] text-cyan-500/60">CPU Binary Pipeline</p>
-          <h2 className="mt-1 text-lg font-black tracking-tight text-white">{model.title}</h2>
-          <p className="mt-1 max-w-xl text-xs leading-5 text-slate-400">{model.summary}</p>
+          <h2 className="mt-1 text-base font-black tracking-tight text-white sm:text-lg">{model.title}</h2>
+          <p className="mt-1 max-w-xl text-[11px] leading-5 text-slate-400 sm:text-xs">{model.summary}</p>
         </div>
-        <div className="rounded-xl border border-white/8 bg-white/[0.03] px-3 py-1.5 text-center shrink-0">
+        <div className="rounded-xl border border-white/8 bg-white/[0.03] px-2 py-1 text-center shrink-0 sm:px-3 sm:py-1.5">
           <p className="text-[9px] uppercase tracking-widest text-slate-600">bit width</p>
-          <p className="font-mono text-base font-black text-white leading-none">
+          <p className="font-mono text-sm font-black text-white leading-none sm:text-base">
             {model.bitWidth}<span className="text-[10px] text-slate-500 font-normal">-bit</span>
           </p>
         </div>
       </div>
 
-      {/* ── SECTION 1: Voltage Switches (TOP — most important) ── */}
-      <div className="rounded-xl border border-violet-400/20 bg-white/[0.02] p-4">
+      {/* ── SECTION 1: Voltage Switches ── */}
+      <div className="rounded-xl border border-violet-400/20 bg-white/[0.02] p-3 sm:p-4">
         {/* Section heading */}
         <div className="mb-3 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -217,7 +217,7 @@ export default memo(function BinaryWorkbench({ model, display, expression, onBit
 
       {/* ── SECTION 2: CPU steps — shown whenever something has been entered ── */}
       {(phase === "result" || phase === "a" || phase === "ab" || Number(display) !== 0) && (
-        <div className="rounded-xl border border-emerald-400/20 bg-white/[0.02] p-4">
+        <div className="rounded-xl border border-emerald-400/20 bg-white/[0.02] p-3 sm:p-4">
           <div className="mb-3 flex items-center gap-2">
             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-400/20 text-[10px] font-black text-emerald-300">2</span>
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">What the CPU just did — step by step</p>
@@ -257,7 +257,7 @@ export default memo(function BinaryWorkbench({ model, display, expression, onBit
 
       {/* ── SECTION 3: Live base conversion ── */}
       {Number(display) !== 0 && (
-        <div className="rounded-xl border border-white/6 bg-white/[0.02] p-4">
+        <div className="rounded-xl border border-white/6 bg-white/[0.02] p-3 sm:p-4">
           <div className="mb-3 flex items-center gap-2">
             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan-400/20 text-[10px] font-black text-cyan-300">3</span>
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
@@ -273,7 +273,7 @@ export default memo(function BinaryWorkbench({ model, display, expression, onBit
 
       {/* ── SECTION 4: Bit inspector ── */}
       {bitInfo && (
-        <div className="rounded-xl border border-white/6 bg-white/[0.02] p-4">
+        <div className="rounded-xl border border-white/6 bg-white/[0.02] p-3 sm:p-4">
           <div className="mb-3 flex items-center gap-2">
             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-400/20 text-[10px] font-black text-amber-300">4</span>
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Bit Inspector</p>

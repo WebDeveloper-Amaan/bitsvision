@@ -52,9 +52,9 @@ const BitCell = memo(function BitCell({ bit, bitIdx, isSign, p, interactive, onF
   const contrib = isOn && !isSign ? powLabel(bitIdx) : null;
 
   return (
-    <div className="flex flex-col items-center" style={{ minWidth: 36 }}>
+    <div className="flex flex-col items-center" style={{ minWidth: 24 }}>
       {/* ── power label ── */}
-      <span className={`mb-1 block text-center font-mono text-[9px] leading-none ${isSign ? "text-rose-700" : p.pow}`}>
+      <span className={`mb-0.5 block text-center font-mono text-[7px] leading-none ${isSign ? "text-rose-700" : p.pow}`}>
         {isSign ? "±" : powLabel(bitIdx)}
       </span>
 
@@ -62,14 +62,14 @@ const BitCell = memo(function BitCell({ bit, bitIdx, isSign, p, interactive, onF
       <div
         onClick={interactive ? onFlip : undefined}
         title={interactive ? (isSign ? "Sign bit — flip to negate" : `Bit ${bitIdx} = ${powLabel(bitIdx)} — click to flip`) : undefined}
-        className={`bit-cell flex h-12 w-full items-center justify-center rounded border text-sm font-black select-none transition-all
+        className={`bit-cell flex h-7 w-full items-center justify-center rounded border text-[11px] font-black select-none transition-all sm:h-10 sm:text-sm
           ${cellStyle} ${interactive ? "cursor-pointer hover:scale-110 hover:z-10 relative" : ""}`}
       >
         {bit}
       </div>
 
       {/* ── value contribution ── */}
-      <span className={`mt-1 block text-center font-mono text-[9px] leading-none ${contrib ? p.contrib : "text-transparent"}`}>
+      <span className={`mt-0.5 block text-center font-mono text-[7px] leading-none ${contrib ? p.contrib : "text-transparent"}`}>
         {contrib ? `+${contrib}` : "+0"}
       </span>
     </div>
@@ -147,7 +147,7 @@ export default memo(function BitRail({ label, bits, accent = "cyan", onBitFlip }
                 {ni > 0 && (
                   <div className="mx-1 w-px self-stretch bg-white/8 rounded-full" />
                 )}
-                <div className="flex items-end gap-1">
+                <div className="flex items-end gap-0.5 sm:gap-1">
                   {nibble.map((bit, ci) => {
                     const globalIdx = globalBase + ci;
                     const bitIdx = len - 1 - globalIdx;
@@ -176,7 +176,8 @@ export default memo(function BitRail({ label, bits, accent = "cyan", onBitFlip }
           <div className="flex items-center gap-0 w-max">
             {nibbles.map((nibble, ni) => {
               const hex = parseInt(nibble.join(""), 2).toString(16).toUpperCase();
-              const nibbleW = nibble.length * 37 + (nibble.length - 1) * 4; // approx px
+              const nibbleW = nibble.length * 25 + (nibble.length - 1) * 2; // mobile
+              const nibbleWSm = nibble.length * 37 + (nibble.length - 1) * 4; // sm+
               return (
                 <div key={ni} className="flex items-center">
                   {ni > 0 && <div className="mx-1 w-px h-3 bg-white/8" />}
