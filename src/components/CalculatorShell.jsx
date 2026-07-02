@@ -25,12 +25,7 @@ function getDeviceId() {
 }
 
 const deviceId = getDeviceId();
-const api = axios.create({ baseURL: API, timeout: 5000, withCredentials: true, headers: { "x-device-id": deviceId } });
-
-// fetch CSRF token once and attach to all mutating requests
-api.get("/csrf-token").then(({ data }) => {
-  api.defaults.headers.common["x-csrf-token"] = data.csrfToken;
-}).catch(() => {});
+const api = axios.create({ baseURL: API, timeout: 5000, headers: { "x-device-id": deviceId } });
 
 const initialState = {
   display: "0",

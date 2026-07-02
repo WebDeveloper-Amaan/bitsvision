@@ -2,8 +2,6 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import cookieParser from "cookie-parser";
-import { doubleCsrf } from "csrf-csrf";
 import mongoose from "mongoose";
 import calculatorRoutes from "./routes/calculator.js";
 
@@ -13,10 +11,6 @@ if (!process.env.MONGO_URI) {
   console.error("  Local dev  → add it to server/.env");
   console.error("  Production → set it in your hosting provider's env config");
   process.exit(1);
-}
-
-if (!process.env.CSRF_SECRET) {
-  console.warn("WARNING: CSRF_SECRET is not set — using insecure default. Set it in production.");
 }
 
 const IS_PROD = process.env.NODE_ENV === "production";
@@ -39,39 +33,20 @@ const corsOptions = {
   credentials: true,
 };
 
-// ── CSRF — Double Submit Cookie pattern ──────────────────────────────────────
-// __Host- prefix requires Secure flag (HTTPS only) — use plain name in dev
-const { generateToken, doubleCsrfProtection } = doubleCsrf({
-  getSecret:           () => process.env.CSRF_SECRET || "bitsvision-csrf-dev-secret",
-  cookieName:          IS_PROD ? "__Host-bv.csrf" : "bv.csrf",
-  cookieOptions: {
-    sameSite: "strict",
-    secure:   IS_PROD,
-    httpOnly: true,
-  },
-  size:                64,
-  getTokenFromRequest: (req) => req.headers["x-csrf-token"],
-});
-
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(helmet());
 app.use(cors(corsOptions));
-app.use(cookieParser());
 app.use(express.json());
 
-// ── Public endpoints — no CSRF token required ────────────────────────────────
+// ── Public endpoints ──────────────────────────────────────────────────────────
 app.get("/api/health", (_req, res) => {
   const states   = ["disconnected", "connected", "connecting", "disconnecting"];
   const dbStatus = states[mongoose.connection.readyState] ?? "unknown";
   res.json({ status: "ok", db: dbStatus });
 });
 
-app.get("/api/csrf-token", (req, res) => {
-  res.json({ csrfToken: generateToken(req, res) });
-});
-
-// ── Protected routes — CSRF enforced ─────────────────────────────────────────
-app.use("/api", doubleCsrfProtection, calculatorRoutes);
+// ── Routes ────────────────────────────────────────────────────────────────────
+app.use("/api", calculatorRoutes);
 
 // ── 404 handler ───────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ error: "Not found" }));
